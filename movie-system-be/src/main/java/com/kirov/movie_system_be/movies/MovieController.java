@@ -1,5 +1,6 @@
 package com.kirov.movie_system_be.movies;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,9 @@ public class MovieController {
   private final MovieService movieService;
 
   @PostMapping
-  public ResponseEntity<Movie> createMovie(@RequestBody Movie movieDto) {
-    return ResponseEntity.ok(movieService.createMovie(movieDto));
+  public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
+    Movie savedMovie = movieService.createMovie(movie);
+    return ResponseEntity.created(URI.create("/movies/" + savedMovie.getId())).body(savedMovie);
   }
 
   @GetMapping
