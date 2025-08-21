@@ -1,1 +1,29 @@
-<p class="text-3xl text-center">home works!</p>
+<div class="p-4 flex items-start gap-6">
+  <aside class="basis-3/12 rounded-2xl p-4 sticky top-22 bg-neutral-100 shadow-md">
+    <h3 class="text-2xl font-semibold mb-2">Categories</h3>
+    @for (c of movieCategories; track c) {
+    <p
+      class="px-1 bg-neutral-200 hover:bg-neutral-900 hover:text-white cursor-pointer active:scale-95 transition-all mb-1 rounded">
+      {{ c }}
+    </p>
+    }
+  </aside>
+  <main class="basis-9/12">
+    <h2 class="text-2xl font-semibold mb-4">Upcoming Movies.</h2>
+    <div class="overflow-clip mb-6 relative rounded-2xl">
+      <img class="h-96 w-full object-cover object-top"
+        src="https://wp.testbytes.net/wp-content/uploads/2024/03/THe-social-network-movie-poster-768x432.jpg"
+        alt="Featured Movie" />
+      <span class="inline-block bg-yellow-300 py-2 px-4 rounded-full absolute top-5 left-5">
+        Upcoming
+      </span>
+    </div>
+    <h2 class="text-3xl font-semibold mb-4">Movies this week.</h2>
+    @let movies = (movies$ | async);
+    @if(movies == null) {
+    <app-loading />
+    } @else {
+    <app-movie-list [movies]="movies" />
+    }
+  </main>
+</div>
