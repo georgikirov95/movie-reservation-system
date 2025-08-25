@@ -1,7 +1,8 @@
+<app-book-now-modal />
 <div class="p-4 flex items-start gap-6">
   <aside class="basis-3/12 rounded-2xl p-4 sticky top-22 bg-neutral-100 shadow-md">
     <h3 class="text-2xl font-semibold mb-2">Categories</h3>
-    @for (c of movieCategories; track c) {
+    @for (c of categories; track c) {
     <p
       class="px-1 bg-neutral-200 hover:bg-neutral-900 hover:text-white cursor-pointer active:scale-95 transition-all mb-1 rounded">
       {{ c }}
@@ -19,11 +20,6 @@
       </span>
     </div>
     <h2 class="text-3xl font-semibold mb-4">Movies this week.</h2>
-    @let movies = (movies$ | async);
-    @if(movies == null) {
-    <app-loading />
-    } @else {
-    <app-movie-list [movies]="movies" />
-    }
+    <app-movie-list (movieClicked)="openBookNowModal($event)" />
   </main>
 </div>

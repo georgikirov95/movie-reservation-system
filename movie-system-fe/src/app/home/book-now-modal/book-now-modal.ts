@@ -13,12 +13,14 @@ import { RouterLink } from "@angular/router";
   templateUrl: './book-now-modal.html',
 })
 export class BookNowModal {
-  protected movie: Movie | undefined;
-  protected selectedShowtime: Showtime | undefined;
-  protected showtimes$!: Observable<Showtime[]>;
   private showtimeService = inject(ShowtimeService);
+  protected movie?: Movie;
+  protected selectedShowtime?: Showtime;
+  protected showtimes$!: Observable<Showtime[]>;
+  protected loading$ = this.showtimeService.loading$;
 
-  @ViewChild('dialog') private dialogRef: ElementRef<HTMLDialogElement> | undefined;
+  @ViewChild('dialog')
+  private dialogRef?: ElementRef<HTMLDialogElement>;
 
   open(movie: Movie) {
     this.movie = movie;

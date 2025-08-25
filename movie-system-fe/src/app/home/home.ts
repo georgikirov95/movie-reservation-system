@@ -1,22 +1,20 @@
-import { Component, } from '@angular/core';
-import { Observable } from "rxjs";
-import { Loading } from "../shared/loading/loading";
+import { Component, ViewChild, } from '@angular/core';
 import { Movie } from "../models/movie";
-import { MovieService } from "../movie-service";
-import { AsyncPipe } from "@angular/common";
 import { MovieList } from "./movie-list/movie-list";
+import { BookNowModal } from "./book-now-modal/book-now-modal";
 
 @Component({
   selector: 'app-home',
-  imports: [Loading, AsyncPipe, MovieList],
+  imports: [MovieList, BookNowModal],
   templateUrl: './home.html',
-  styleUrl: './home.css'
 })
 export class Home {
-  movieCategories = ['Sci-Fi', 'Crime', 'Action', 'Drama']; // example categories
-  movies$: Observable<Movie[]>;
+  protected categories = ['Sci-Fi', 'Crime', 'Action', 'Drama']; // example categories
 
-  constructor(private movieService: MovieService) {
-    this.movies$ = this.movieService.getMovies();
+  @ViewChild(BookNowModal)
+  private bookNowModal?: BookNowModal;
+
+  openBookNowModal(movie: Movie) {
+    this.bookNowModal?.open(movie);
   }
 }
