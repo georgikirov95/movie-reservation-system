@@ -1,0 +1,24 @@
+<dialog #dialog class="w-xl backdrop:bg-neutral-950/30 top-1/2 mx-auto -translate-y-1/2 bg-white rounded-2xl p-4">
+  <h3 class="text-2xl text-center font-semibold border-b border-dashed pb-2 mb-4">
+    {{movie?.title}}
+  </h3>
+  <p class="text-lg font-semibold mb-2">Select Show Date</p>
+  @let showtimes = (showtimes$ | async);
+  @if (showtimes === null) {
+  <app-loading class="mx-auto" />
+  }
+  <div class="grid grid-cols-7 gap-2 mb-4">
+    @for (showtime of showtimes; track showtime.id) {
+    <div (click)="selectShowtime(showtime)" class="hover:bg-neutral-950 border
+    hover:text-white hover:cursor-pointer text-center p-1 tex-sm rounded-xl"
+      [class.bg-neutral-950]="selectedShowtime?.id === showtime.id"
+      [class.text-white]="selectedShowtime?.id === showtime.id">
+      <p>{{showtime.startTime | date:"short"}}</p>
+    </div>
+    }
+  </div>
+  <div class="flex justify-end">
+    <a [routerLink]="selectedShowtime ? ['movies',this.movie?.id,'showtimes',this.selectedShowtime.id]: null"
+      class="active:scale-95 bg-neutral-950 transition-transform rounded-lg hover:cursor-pointer px-8 text-white py-2">Next</a>
+  </div>
+</dialog>
